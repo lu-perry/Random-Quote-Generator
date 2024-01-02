@@ -6,11 +6,27 @@ let loader = document.getElementById('loader');
 let quoteContainer = document.getElementById('quote-container');
 let author = document.getElementById('author');
 let quotesArr = [];
-loader.hidden = true;
 
-// main fetch function
+//function to show when loading
+
+function loading() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+};
+
+//function to show a new quote once generated
+
+function quoteShow() {
+    quoteContainer.hidden = false;
+    loader.hidden = true;
+};
+
+
+// main fetch function to hide previous quote if it exists and fetch new quote
 
 async function fetchQuotes() {
+
+        loading();
 
     //remove previous quote and author
     
@@ -22,12 +38,12 @@ async function fetchQuotes() {
         childAuths.forEach(function (childAuths) {
             author.removeChild(childAuths);
         });
+
      
     //populate new quote
         
         const response = await fetch('https://type.fit/api/quotes');
         quotesArr = await response.json();
-        
 
         let quoteNum = Math.floor(Math.random() * 10);
 
@@ -43,31 +59,9 @@ async function fetchQuotes() {
     // hide loader and show quote container
         
         quoteShow();
+
     }  
 
-if (!quote.hasChildNodes) {
-    loader.hidden = false;
-    quoteContainer.hidden = true;
-};
-
-function removeQuotes() {
-    while (quote.hasChildNodes()) {
-        quote.removeChild(node);
-        author.removeChild(nodeAuth);
-    };
-};
-
-function loading() {
-    loader.hidden = false;
-    quoteContainer.hidden = true;
-};
-
-function quoteShow() {
-    quoteContainer.hidden = false;
-    loader.hidden = true;
-    quoteText.hidden = false;
-
-};
 
 // fetch quotes on button click
 
